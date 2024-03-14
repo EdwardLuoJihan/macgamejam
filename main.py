@@ -22,6 +22,8 @@ aparticles = {
 }
 mixer.music.load('assets/sounds/boom.wav')
 mixer.music.set_volume(0.2)
+accumulated_speed = [0,0]
+current = -1 #0 demon, 1 angel
 
 #image load
 #tile dimensions - 64 x 143
@@ -77,22 +79,6 @@ class Tile:
     def v(self, vis):
         self.vis = vis
 
-# midi = mido.MidiFile('assets/sounds/sound1.midi')
-# pygame.midi.init()
-# player = pygame.midi.Output(0)
-# player.set_instrument(0)
-# for i in midi:
-#     try:
-#         if i.note == 38 and i.velocity > 60:
-#             print(i)
-#             player.note_on(note=i.note, velocity=i.velocity, channel=i.channel)
-#             time.sleep(i.time)
-#             player.note_off(note=i.note, velocity=i.velocity, channel=i.channel)
-#         else:
-#             time.sleep(i.time)
-#     except:
-#         print(i)
-
 tile_group = []
 
 #particle system
@@ -110,6 +96,8 @@ def tile_surf(color, x, y):
     return surf
 
 def create_particle(minx, maxx, my, color, velocity, direction, duration, sizemin, sizemax, t):
+    global screen_shake
+    global current
     if t == 1:
         aparticles["smallbg"].append([[random.randint(minx, maxx), my], [random.randint(0, velocity) / 10 - 1, -2], duration, random.randint(sizemin, sizemax)])
     
@@ -132,9 +120,17 @@ def create_particle(minx, maxx, my, color, velocity, direction, duration, sizemi
     for particle in aparticles["largetiles"]:
         if particle[0][1] <= 20:
             if particle[4] == (255, 33, 122):
-                print("recieved red orb - penalize player")
+                pass
+                #print("recieved red orb - penalize player")
             else:
-                print("recieved purple orb - move player")
+                #print("recieved purple orb - move player")
+                mx, my = pygame.mouse.get_pos()
+                if mx <= 675:
+                    accumulated_speed[0] += 1
+                    current = 0
+                else:
+                    accumulated_speed[1] += 1
+                    current = 1
             aparticles["largetiles"].remove(particle)
         else:
             particle[0][1] += particle[1][1]
@@ -150,6 +146,35 @@ def create_particle(minx, maxx, my, color, velocity, direction, duration, sizemi
             if particle[2] <= 0 or particle[3] <= 0:
                 aparticles["largetiles"].remove(particle)
 
+class Player(pygame.sprite.Sprite):
+    def __init__(self, x, y, i, img=None):
+        super().__init__()
+        self.x = x
+        self.y = y
+        i = 255-i*2
+        self.image = pygame.Surface([20, 20])
+        self.image.fill((i,i,i))
+        self.rect = self.image.get_rect()
+        self.rect.x = self.x
+        self.rect.y = self.y
+ 
+    def update(self, x, y):
+        self.rect.x = x
+        self.rect.y = y
+
+player = Player(57, 720, 0)
+players = pygame.sprite.Group()
+players.add(player)
+
+# for i in range(34):
+#     for j in range(18):
+#         player = Player(57+j*20, 720-i*20, i)
+#         players.add(player)
+
+# for i in range(34):
+#     for j in range(18):
+#         player = Player(1222-j*20, 720-i*20, i)
+#         players.add(player)
 
 while True:
     wn.fill((0,0,0))
@@ -266,6 +291,8 @@ while True:
     wn.blit(border, (475, 0))
     wn.blit(hborder, (0, 0))
     wn.blit(hlborder, (825, 0))
+    #players.update()
+    players.draw(wn)
     screen.blit(wn, render_offset)
     pygame.display.update()
     mainclock.tick(120)
