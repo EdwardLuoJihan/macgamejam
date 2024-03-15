@@ -557,9 +557,9 @@ while True:
                         tile_group.remove(tile)
                         c1.remove(tile)
                         tile.v(False)
-                        screen_shake = default_shake
+                        #screen_shake = default_shake
                         create_particle(x, x+50, y+71, (84, 16, 148), 20, -2, 80, 20, 20, t=2)
-                        mixer.music.play()
+                        #mixer.music.play()
                     else:
                         screen_shake = 5
                         create_particle(496, 496+50, 637, (255, 33, 122), 20, -2, 80, 20, 20, t=2)
@@ -578,9 +578,9 @@ while True:
                         tile_group.remove(tile)
                         c2.remove(tile)
                         tile.v(False)
-                        screen_shake = default_shake
+                        #screen_shake = default_shake
                         create_particle(x, x+50, y+71, (84, 16, 148), 20, -2, 80, 20, 20, t=2)
-                        mixer.music.play()
+                        #mixer.music.play()
                     else:
                         screen_shake = 5
                         create_particle(578, 678+50, 637, (255, 33, 122), 20, -2, 80, 20, 20, t=2)
@@ -599,9 +599,9 @@ while True:
                         tile_group.remove(tile)
                         c3.remove(tile)
                         tile.v(False)
-                        screen_shake = default_shake
+                        #screen_shake = default_shake
                         create_particle(x, x+50, y+71, (84, 16, 148), 20, -2, 80, 20, 20, t=2)
-                        mixer.music.play()
+                        #mixer.music.play()
                     else:
                         screen_shake = 5
                         create_particle(659, 659+50, 637, (255, 33, 122), 20, -2, 80, 20, 20, t=2)
@@ -611,7 +611,7 @@ while True:
                     screen_shake = 5
                     create_particle(659, 659+50, 637, (255, 33, 122), 20, -2, 80, 20, 20, t=2)
                     mixer.music.set_volume(0.05)
-                    mixer.music.play()
+                    #mixer.music.play()
             if event.key == pygame.K_v: #4
                 try:
                     tile = c4[0]
@@ -620,9 +620,9 @@ while True:
                         tile_group.remove(tile)
                         c4.remove(tile)
                         tile.v(False)
-                        screen_shake = default_shake
+                        #screen_shake = default_shake
                         create_particle(x, x+50, y+71, (84, 16, 148), 20, -2, 80, 20, 20, t=2)
-                        mixer.music.play()
+                        #mixer.music.play()
                     else:
                         screen_shake = 5
                         create_particle(740, 740+50, 637, (255, 33, 122), 20, -2, 80, 20, 20, t=2)
